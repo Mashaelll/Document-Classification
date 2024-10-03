@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Article Classifier</h1>
+    <form id="prediction-form">
+        <textarea name="article_text" rows="10" cols="50" placeholder="Enter your article here..."></textarea><br>
+        <button type="submit">Predict Category</button>
+    </form>
+    <h3 id="prediction-result"></h3> <!-- Changed for better result display -->
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            document.getElementById('prediction-result').innerText = `Predicted Category: ${data.prediction}`; // Updated this line
+        });
+    </script>
+</body>
+</html>
